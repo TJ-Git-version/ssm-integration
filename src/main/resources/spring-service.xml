@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+<!--扫描 service,aop,tx 相关-->
+
+    <!--扫描service和pointcut包下的组件-->
+    <context:component-scan base-package="com.surfur.ssm.service,com.surfur.ssm.pointcut"/>
+
+    <!--开启aspectj框架注解支持-->
+    <aop:aspectj-autoproxy/>
+
+    <!--
+     事务注解开启
+     注意:数据库配置将在mapper文件中,最终会被加载到同一个容器中,此处爆红运行正常!
+    -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--引入事务管理器-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

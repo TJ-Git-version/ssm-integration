@@ -17,10 +17,28 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <!--mybatis配置方式1：引用外部配置文件-->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!-- 指定 Mybatis 全局配置文件位置 -->
-        <property name="configLocation" value="mybatis/mybatis-config.xml"/>
+<!--    &lt;!&ndash;mybatis配置方式1：引用外部配置文件&ndash;&gt;-->
+<!--    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+<!--        &lt;!&ndash; 指定 Mybatis 全局配置文件位置 &ndash;&gt;-->
+<!--        <property name="configLocation" value="mybatis/mybatis-config.xml"/>-->
+<!--        &lt;!&ndash; 指定 Mapper 配置文件位置 &ndash;&gt;-->
+<!--        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>-->
+<!--        &lt;!&ndash; 装配数据源 &ndash;&gt;-->
+<!--        <property name="dataSource" ref="dataSource"/>-->
+<!--    </bean>-->
+
+    <!--mybatis配置方式2: 彻底舍弃Mybatis全局配置文件-->
+    <!--配置sqlSessionFactoryBean-->
+    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 舍弃 Mybatis 全局配置文件，使用 configuration 属性 -->
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+                <property name="logImpl" value="org.apache.ibatis.logging.slf4j.Slf4jImpl"/>
+            </bean>
+        </property>
+        <!--舍弃 Mybatis 全局配置文件，使用 typeAliasesPackage 属性配置实体类所在包-->
+        <property name="typeAliasesPackage" value="com.surfur.ssm.domain"/>
         <!-- 指定 Mapper 配置文件位置 -->
         <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
         <!-- 装配数据源 -->

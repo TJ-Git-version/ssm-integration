@@ -8,6 +8,7 @@ import com.surfur.ssm.vo.req.EmpInsertReq;
 import com.surfur.ssm.vo.req.EmpQueryReq;
 import com.surfur.ssm.vo.req.EmpUpdateReq;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,13 +37,13 @@ public class EmpController {
     }
 
     @PostMapping
-    public ResultUtil<?> insertEmp(@RequestBody EmpInsertReq empInsertReq) {
+    public ResultUtil<?> insertEmp(@RequestBody @Validated EmpInsertReq empInsertReq) {
         empService.insertEmp(empInsertReq);
         return ResultUtil.ok();
     }
 
     @PutMapping
-    public ResultUtil<?> updateEmp(@RequestBody EmpUpdateReq empUpdateReq) {
+    public ResultUtil<?> updateEmp(@RequestBody @Validated EmpUpdateReq empUpdateReq) {
         empService.updateEmp(empUpdateReq);
         return ResultUtil.ok();
     }

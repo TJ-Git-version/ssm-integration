@@ -167,4 +167,8 @@
 
     </dependencies>
 
+    <build>
+        <finalName>ssm-integration</finalName>
+    </build>
+
 </project>

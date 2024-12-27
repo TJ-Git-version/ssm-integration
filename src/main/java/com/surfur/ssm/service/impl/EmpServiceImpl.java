@@ -10,6 +10,7 @@ import com.surfur.ssm.vo.req.EmpInsertReq;
 import com.surfur.ssm.vo.req.EmpQueryReq;
 import com.surfur.ssm.vo.req.EmpUpdateReq;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,7 +42,12 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insertEmp(EmpInsertReq empInsertReq) {
+        empMapper.insertEmp(empInsertReq);
+        int i = 10 / 0;
+        empInsertReq.setEmpName("emp2");
+        empInsertReq.setEmpSalary(100.0);
         empMapper.insertEmp(empInsertReq);
     }
 

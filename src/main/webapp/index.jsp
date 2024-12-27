@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+      <h1>ssm-integration success！！！</h1>
   </body>
 </html>

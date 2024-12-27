@@ -25,7 +25,7 @@ public class EmpController {
 
     @GetMapping("{id}")
     public ResponseEntity<EmpEntity> findEmpById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<EmpEntity>(HttpStatus.OK);
+        return new ResponseEntity<EmpEntity>(empService.findEmpById(id), HttpStatus.OK);
     }
 
 }

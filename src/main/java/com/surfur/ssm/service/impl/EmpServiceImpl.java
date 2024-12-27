@@ -2,6 +2,8 @@ package com.surfur.ssm.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.surfur.ssm.annotation.OperationLog;
+import com.surfur.ssm.common.LogScheme;
 import com.surfur.ssm.common.PageBean;
 import com.surfur.ssm.domain.EmpEntity;
 import com.surfur.ssm.mapper.EmpMapper;
@@ -10,6 +12,7 @@ import com.surfur.ssm.vo.req.EmpInsertReq;
 import com.surfur.ssm.vo.req.EmpQueryReq;
 import com.surfur.ssm.vo.req.EmpUpdateReq;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
+    @OperationLog(type = LogScheme.OperationType.USER_LIST, content = "查询员工列表")
     public PageBean<EmpEntity> findListPage(Integer currentPage, Integer pageSize, EmpQueryReq empQueryReq) {
         Page<EmpEntity> page = PageHelper.startPage(currentPage, pageSize);
         List<EmpEntity> empList = empMapper.findEmpList(empQueryReq);
@@ -41,7 +45,10 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insertEmp(EmpInsertReq empInsertReq) {
+        empMapper.insertEmp(empInsertReq);
+        int i = 1 / 0;
         empMapper.insertEmp(empInsertReq);
     }
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * description emp控制层处理器
  */
 @RestController
-    @RequestMapping("/emp")
+@RequestMapping("/emp")
 @AllArgsConstructor
 public class EmpController {
 

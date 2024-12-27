@@ -3,14 +3,56 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.surfur.ssm.mapper.EmpMapper">
+    <sql id="empBasicSql">
+        select empId,
+               empName,
+               empSalary
+        from emp
+    </sql>
 
     <select id="findEmpById" resultType="com.surfur.ssm.domain.EmpEntity">
-        select  empId,
-                empName,
-                empSalary
-        from emp
+        <include refid="empBasicSql"/>
         <where>
             empId = #{id}
         </where>
     </select>
+
+    <select id="findEmpList" resultType="com.surfur.ssm.domain.EmpEntity">
+        <include refid="empBasicSql"/>
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                and locate(trim(#{keyWord}), empName)
+            </if>
+            <if test="minEmpSalary != null">
+                and empSalary &gt; #{minEmpSalary}
+            </if>
+            <if test="maxEmpSalary != null">
+                and empSalary &lt; #{maxEmpSalary}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertEmp">
+        insert into emp(empName, empSalary)
+        values (#{empName}, #{empSalary})
+    </insert>
+
+    <update id="updateEmp">
+        update emp
+        <set>
+            <if test="empName != null">
+                empName = #{empName},
+            </if>
+            <if test="empSalary != null">
+                empSalary = #{empSalary},
+            </if>
+        </set>
+        <where>
+            empId = #{empId}
+        </where>
+    </update>
+
+    <delete id="deleteEmp">
+        delete from emp where empId = #{empId}
+    </delete>
 </mapper>
